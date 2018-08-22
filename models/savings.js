@@ -1,5 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
-  var Example = sequelize.define("Example", {
+  var Savings = sequelize.define("Savings", {
+    // Giving the Savings model a name of type STRING
     text: DataTypes.STRING,
     description: DataTypes.TEXT
   });
