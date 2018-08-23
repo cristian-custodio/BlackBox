@@ -31,4 +31,17 @@ module.exports = function (app) {
         });
     });
 
+    // PUT route for updating posts
+  app.put("/api/savings", function(req, res) {
+    db.Post.update(
+      req.body,
+      {
+        where: {
+          id: req.body.id
+        }
+      }).then(function(savings) {
+      res.json(savings);
+    });
+  });
+
 }

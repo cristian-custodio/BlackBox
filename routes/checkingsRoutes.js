@@ -31,5 +31,17 @@ module.exports = function (app) {
         });
     });
 
+    // PUT route for updating checkings account
+    app.put("/api/checkings", function (req, res) {
+        db.Post.update(
+            req.body,
+            {
+                where: {
+                    id: req.body.id
+                }
+            }).then(function (check) {
+                res.json(check);
+            });
+    });
 
 };
