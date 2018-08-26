@@ -11,10 +11,27 @@ module.exports = function(app) {
     });
   });
 
+  //Load Create Account Page
+  app.get("/createAccount/", function(req, res) {
+      res.render("createAccount");
+  });
+
+  //Load Admin Dashboard Page
+  app.get("/admin/", function(req, res) {
+    res.render("adminDashboard");
+});
+
+  //Load User Dashboard Page
+app.get("/user/:id", function(req, res) {
+  res.render("userDashboard");
+});
+
+
   // Load example page and pass in an example by id
   app.get("/example/:id", function(req, res) {
     db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
       res.render("example", {
+        //Give information to handlebars view
         example: dbExample
       });
     });
