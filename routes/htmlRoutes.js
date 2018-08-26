@@ -1,18 +1,44 @@
-var path = require("path");
+var db = require("../models");
 
 module.exports = function(app) {
   // Load index page
   app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
+    db.Example.findAll({}).then(function(dbExamples) {
+      res.render("login", {
+        msg: "Welcome!",
+        examples: dbExamples
+      });
+    });
   });
 
+  //Load Create Account Page
+  app.get("/createAccount/", function(req, res) {
+      res.render("createAccount");
+  });
+
+  //Load Admin Dashboard Page
+  app.get("/admin/", function(req, res) {
+    res.render("adminDashboard");
+});
+
+  //Load User Dashboard Page
+app.get("/user/:id", function(req, res) {
+  res.render("userDashboard");
+});
+
+
   // Load example page and pass in an example by id
-  app.get("/example", function(req, res) {
-    res.sendFile(path.join(__dirname,"../public/example.html"));
+  app.get("/example/:id", function(req, res) {
+    db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
+      res.render("example", {
+        //Give information to handlebars view
+        example: dbExample
+      });
+    });
   });
 
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/404.html"));
+    res.render("404");
   });
 };
