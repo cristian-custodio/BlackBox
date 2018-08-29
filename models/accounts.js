@@ -23,7 +23,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     User_UserID: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUID3,
+      defaultValue: DataTypes.UUIDV3,
       len: [1,50]
     },
     openDate: {
@@ -39,11 +39,10 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Accounts.associate = function(models) {
-    Accounts.belongsTo(models.User, {
-      foreignKey: {
-        allowNull: false
-      }
-    })
+    Accounts.belongsTO(models.User, {
+      foreignKey: User_UserID,
+      targetKey: uuid
+    });
   }
 
   return Accounts;

@@ -4,7 +4,7 @@ module.exports = function(sequelize, DataTypes) {
     // Transfer ID, type STRING
     transferID: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV3,
+      defaultValue: UUIDV3,
       primaryKey: true
     },
     // Transferring sendersID, type STRING
@@ -25,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
     // Transfer time, type NOW
     timeOfTransfer: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.Now 
+      default: DataTypes.NOW
     },
     // Transfer receivers ID, type STRING
     receiverID: {
@@ -39,6 +39,13 @@ module.exports = function(sequelize, DataTypes) {
     }
 
   });
+
+  Transfers.associate = function(models) {
+    Transfers.belongsTO(models.Accounts, {
+      foreignKey: transferID,
+      targetKey: accountNum
+    });
+  }
 
   return Transfers;
 };
