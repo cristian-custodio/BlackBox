@@ -31,21 +31,6 @@ module.exports = function (app) {
         });
     });
 
-    // Delete route for deletings users
-    app.delete("/api/user/:uuid", function (req, res) {
-        db.User.destroy(req.params, {
-            where: {
-                uuid: req.params.uuid
-            }
-        }).then(function (dbUser) {
-            res.json(dbUser);
-            
-        });
-
-        // maybe set update delete route for deleting account simultaneously
-    });
-
-
     // GET route for accounts 
     app.get("/api/accounts", function (req, res) {
         db.Accounts.findAll({ include: [db.Accounts] })
@@ -76,16 +61,6 @@ module.exports = function (app) {
         });
     });
 
-    // Delete route for deleting accounts
-    app.delete("/api/accounts/:User_UserID", function (req, res) {
-        db.Accounts.update(req.params, {
-            where: {
-                User_UserID: req.params.User_UserID
-            }
-        }).then(function (dbAccounts) {
-            res.json(dbAccounts);
-        });
-    });
 
     // Post route for transactions
     app.post("/api/transactions", function (req, res) {
