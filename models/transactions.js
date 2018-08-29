@@ -20,11 +20,10 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Transactions.associate = function(models) {
-    Transactions.belongsTo(models.Accounts, {
-      foreignKey: {
-        allowNull: false
-      }
-    })
+    Transactions.belongsTO(models.Accounts, {
+      foreignKey: Accounts_AccountID,
+      targetKey: accountNum
+    });
   }
 
   return Transactions;
