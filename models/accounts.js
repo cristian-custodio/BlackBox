@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
   var Accounts = sequelize.define("Accounts", {
     // Giving the Accounts model an accountNum of type INT
     accountNum: {
-      type: DataTypes.INT,
+      type: DataTypes.INTEGER,
       len: [9,10]
     },
     balance: {
@@ -32,14 +32,14 @@ module.exports = function(sequelize, DataTypes) {
       len: [2]
     },
     interestRate: {
-      type: DataTypes.INT,
+      type: DataTypes.INTEGER,
       allowNull: false,
       len: [14]
     }
   });
 
   Accounts.associate = function(models) {
-    Accounts.belongsTO(models.User, {
+    Accounts.belongsTo(models.User, {
       foreignKey: {
         allowNull: false
       }

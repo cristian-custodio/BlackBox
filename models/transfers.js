@@ -3,8 +3,8 @@ module.exports = function(sequelize, DataTypes) {
   var Transfers = sequelize.define("Transfers", {
     // Transfer ID, type STRING
     transferID: {
-      type: DataTypes.UUID3,
-      defaultValue: UUIDV3,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV3,
       primaryKey: true
     },
     // Transferring sendersID, type STRING
@@ -24,9 +24,9 @@ module.exports = function(sequelize, DataTypes) {
     },
     // Transfer time, type NOW
     timeOfTransfer: {
-      type: DataTypes.NOW,
-      allowNull: false
-    }
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.Now 
+    },
     // Transfer receivers ID, type STRING
     receiverID: {
       type: DataTypes.STRING,
