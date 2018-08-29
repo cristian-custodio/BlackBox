@@ -9,17 +9,18 @@ module.exports = function(sequelize, DataTypes) {
     // Giving the Transactions model an accountid of type uuid
     Accounts_AccountID: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUID3
+      defaultValue: DataTypes.UUID3,
       len: [9,10]
     },
     // Giving the Transactions model a dateTime of DATE
     dateTime: {
-      DataTypes.NOW
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
     }
   });
 
   Transactions.associate = function(models) {
-    Transactions.belongsTO(models.Accounts, {
+    Transactions.belongsTo(models.Accounts, {
       foreignKey: {
         allowNull: false
       }
