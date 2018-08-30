@@ -3,11 +3,12 @@ module.exports = function(sequelize, DataTypes) {
 
   var Account = sequelize.define("Account", {
     // Giving the Accounts model an accountNum of type INT
-    accounts_ID: {
+    account_ID: {
       type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV1,
       primaryKey: true
     },
-    Users_UserID: {
+    User_UserID: {
       type: DataTypes.UUID,
       unique: true
     },
@@ -46,7 +47,7 @@ module.exports = function(sequelize, DataTypes) {
   // the account table
   Account.associate = function(models) {
     Account.belongsTo(models.User, {
-      foreignKey: "accounts_ID",
+      foreignKey: "account_ID",
       constraints: false
     });
   }
@@ -55,7 +56,7 @@ module.exports = function(sequelize, DataTypes) {
   // transactions
   Account.associate = function(models) {
     Account.hasMany(models.Transaction, {
-      foreignKey: "Account_AccountsID",
+      foreignKey: "Account_AccountID",
       constraints: false
     });
   }
