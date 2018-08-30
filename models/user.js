@@ -1,10 +1,11 @@
-module.exports = function(sequelize, DataTypes) {
+'use strict';
+module.exports = function(sequelize, DataTypes) => {
 
   var User = sequelize.define("User", {
     // Giving the User model a uuid of type UUIDV4
-    uuid: {
+    user_ID: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV3,
+      defaultValue: DataTypes.UUIDV1,
       primaryKey: true
     },
     // Users first_name, type STRING
@@ -72,8 +73,14 @@ module.exports = function(sequelize, DataTypes) {
   }
 
   User.hook("beforeCreate", function(user){
-      user.password= bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
-  })
+      user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+  });
+
+  User.associate = function(models) {
+    User.hasMany(models.Accounts, {
+      foreignKey: "User_UserID"
+    });
+  }
 
   return User;
 };
