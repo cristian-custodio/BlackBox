@@ -1,21 +1,21 @@
 {
   "development": {
     "username": "root",
-    "password": "Thor_2012",
+    "password": "",
     "database": "bank_db",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "Thor_2012",
+    "password": "",
     "database": "bank_db",
     "host": "localhost",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
-    "password": "Thor_2012",
+    "password": "",
     "database": "bank_db",
     "host": "localhost",
     "dialect": "mysql"
