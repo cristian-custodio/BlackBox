@@ -45,7 +45,7 @@ module.exports = function(sequelize, DataTypes) {
   // the account table
   Transaction.associate = function(models) {
     Transaction.belongsTo(models.Account, {
-      foreignKey: "accounts_ID",
+      foreignKey: "account_ID",
       constraints: false
     });
   }

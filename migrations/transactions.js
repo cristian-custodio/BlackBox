@@ -7,7 +7,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
-      Account_AccountsID: {
+      Account_AccountID: {
         allowNull: false,
         foreignKey: true,
         type: Sequelize.UUID

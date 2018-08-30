@@ -40,13 +40,13 @@ module.exports = function(sequelize, DataTypes) {
     },
     // Users primPhone, type STRING
     primPhone: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       len: [14]
     },
     // Users ssn, type STRING
     ssn: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       len: [10]
     },
@@ -59,10 +59,6 @@ module.exports = function(sequelize, DataTypes) {
     email:{
         type:DataTypes.STRING,
         allowNull:false,
-        unique: true,
-        validate:{
-            isEmail: true
-        }
     },
     // Users password, type STRING
     password:{
