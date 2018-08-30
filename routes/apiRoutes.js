@@ -71,13 +71,11 @@ module.exports = function (app) {
             res.json(dbTransactions);
         });
 
-        // accountNum.balance = balance - amount;
+        accountNum.balance = balance - amount;
         // update accounts balance here
-        // app.put("/api/accounts", function (req, res){
-        //     db.Accounts.update(accountNum).then(function (newBalance){
-        //         res.json(newBalance);
-        //     });
-        // });
+        db.Accounts.update(accountNum).then(function (currentBalance) {
+            res.json(currentBalance);
+        });
     });
 
     // Post route for transfers
@@ -93,14 +91,13 @@ module.exports = function (app) {
             res.json(dbTransfers);
         });
 
-        // accounts.balance = balance + amtSent;
+        accountsnum.balance = balance + amtSent;
         // update account balance here
-        // app.put("/api/accounts", function (req, res){
-        //     db.Accounts.update(accountNum).then(function (newBalance){
-        //         res.json(newBalance);
-        //     });
-        // });
+        db.Accounts.update(accountNum).then(function (currentBalance) {
+            res.json(currentBalance);
+        });
     });
+
 
 
 
