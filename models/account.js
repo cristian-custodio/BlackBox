@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function(sequelize, DataTypes) => {
+module.exports = function(sequelize, DataTypes) {
 
   var Account = sequelize.define("Account", {
     // Giving the Accounts model an accountNum of type INT
@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) => {
     },
     Users_UserID: {
       type: DataTypes.UUID,
-      foreignKey: true
+      unique: true
     },
     accountNum: {
       type: DataTypes.INTEGER,
@@ -42,17 +42,23 @@ module.exports = function(sequelize, DataTypes) => {
     }
   });
 
-  Accounts.associate = function(models) {
-    Accounts.belongsTo(models.User, {
+  // Associates Account and User table because the transaction belongsTo
+  // the account table
+  Account.associate = function(models) {
+    Account.belongsTo(models.User, {
       foreignKey: "accounts_ID",
+      constraints: false
     });
   }
 
-  Accounts.associate = function(models) {
-    Accounts.hasMany(models.Transactions, {
-      foreignKey: "User_UserID"
+  // Associates Account and Transaction table because the account hasMany
+  // transactions
+  Account.associate = function(models) {
+    Account.hasMany(models.Transaction, {
+      foreignKey: "Account_AccountsID",
+      constraints: false
     });
   }
 
-  return Accounts;
+  return Account;
 };

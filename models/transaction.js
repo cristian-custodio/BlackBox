@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function(sequelize, DataTypes) => {
+module.exports = function(sequelize, DataTypes) {
 
   var Transaction = sequelize.define("Transaction", {
     // Giving the Transactions model an transaction_ID of type Integer
@@ -8,9 +8,10 @@ module.exports = function(sequelize, DataTypes) => {
       allowNull: false,
       primaryKey: true
     },
+    // Giving the Transactions model an Account_AccountsID of type UUID
     Account_AccountsID: {
       type: DataTypes.UUID,
-      foreignKey: true
+      unique: true
     },
     // Giving the Transactions model an amount of type DOUBLE
     amount: {
@@ -40,11 +41,14 @@ module.exports = function(sequelize, DataTypes) => {
     }
   });
 
-  Transactions.associate = function(models) {
-    Transactions.belongsTo(models.Accounts, {
-      foreignKey: "transaction_ID",
+  // Associates Transaction and Account table because the transaction belongsTo
+  // the account table
+  Transaction.associate = function(models) {
+    Transaction.belongsTo(models.Account, {
+      foreignKey: "accounts_ID",
+      constraints: false
     });
   }
 
-  return Transactions;
+  return Transaction;
 };
