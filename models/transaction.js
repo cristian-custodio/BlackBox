@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     // Giving the Transactions model an Account_AccountsID of type UUID
-    Account_AccountsID: {
+    Account_AccountID: {
       type: DataTypes.UUID,
       unique: true
     },
