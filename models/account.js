@@ -1,15 +1,16 @@
 'use strict';
-module.exports = function(sequelize, DataTypes) => {
+module.exports = function(sequelize, DataTypes) {
 
   var Account = sequelize.define("Account", {
     // Giving the Accounts model an accountNum of type INT
-    accounts_ID: {
+    account_ID: {
       type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV1,
       primaryKey: true
     },
-    Users_UserID: {
+    User_UserID: {
       type: DataTypes.UUID,
-      foreignKey: true
+      unique: true
     },
     accountNum: {
       type: DataTypes.INTEGER,
@@ -42,17 +43,23 @@ module.exports = function(sequelize, DataTypes) => {
     }
   });
 
-  Accounts.associate = function(models) {
-    Accounts.belongsTo(models.User, {
-      foreignKey: "accounts_ID",
+  // Associates Account and User table because the transaction belongsTo
+  // the account table
+  Account.associate = function(models) {
+    Account.belongsTo(models.User, {
+      foreignKey: "account_ID",
+      constraints: false
     });
   }
 
-  Accounts.associate = function(models) {
-    Accounts.hasMany(models.Transactions, {
-      foreignKey: "User_UserID"
+  // Associates Account and Transaction table because the account hasMany
+  // transactions
+  Account.associate = function(models) {
+    Account.hasMany(models.Transaction, {
+      foreignKey: "Account_AccountID",
+      constraints: false
     });
   }
 
-  return Accounts;
+  return Account;
 };

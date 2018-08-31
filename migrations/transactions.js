@@ -1,13 +1,13 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Transaction', {
+    return queryInterface.createTable('Transactions', {
       transaction_ID: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID
       },
-      Account_AccountsID: {
+      Account_AccountID: {
         allowNull: false,
         foreignKey: true,
         type: Sequelize.UUID
@@ -44,6 +44,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('User');
+    return queryInterface.dropTable('Transactions');
   }
 };

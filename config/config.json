@@ -1,10 +1,12 @@
 {
   "development": {
     "username": "root",
-    "password": "",
+    "password": "Thor_2012",
     "database": "bank_db",
     "host": "localhost",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "logging": true,
+    "operatorsAliases": "Sequelize.Op"
   },
   "test": {
     "username": "root",
@@ -18,6 +20,7 @@
     "password": "",
     "database": "bank_db",
     "host": "localhost",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "operatorsAliases": "Sequelize.Op"
   }
 }

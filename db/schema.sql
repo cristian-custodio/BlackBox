@@ -1,1 +1,2 @@
+DROP DATABASE IF EXISTS bank_db;
 CREATE DATABASE bank_db;
