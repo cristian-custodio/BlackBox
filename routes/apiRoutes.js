@@ -16,7 +16,9 @@ module.exports = function (app) {
             email: req.body.email,
             password: req.body.password
         }).then(function (dbUser) {
-            res.json(dbUser);
+            res.status(201).json(dbUser);
+        }).catch(function (err){
+            res.status(400).send(err);
         });
     });
 
@@ -29,8 +31,11 @@ module.exports = function (app) {
         }).then(function (usersId) {
             var userId = usersId;
 
-            db.User.update(req.body, userId).then(function (dbUser) {
-                res.json(dbUser);
+            db.User.update(req.body, userId)
+            .then(function (dbUser) {
+                res.status(200).json(dbUser);
+            }).catch(function (err){
+                res.status(404).send(err);
             });
         });
     })
@@ -40,8 +45,9 @@ module.exports = function (app) {
     app.get("/api/accounts", function (req, res) {
         db.Account.findAll({ include: [db.Account] })
             .then(function (dbAccounts) {
-                res.json(dbAccounts);
-            });
+                res.status(200).json(dbAccounts);
+            }).catch(function (err){
+                res.status(401).send(err);
     });
 
     // GET route for single account
@@ -51,7 +57,9 @@ module.exports = function (app) {
                 User_ID: req.params.User_ID
             }
         }).then(function (dbAccounts) {
-            res.json(dbAccounts);
+            res.status(200).json(dbAccounts);
+        }).catch(function(err){
+            res.status(401).send(err);
         });
     });
 
@@ -65,10 +73,12 @@ module.exports = function (app) {
 
             db.Account.update(req.body, thisAccount
             ).then(function (dbAccounts) {
-                res.json(dbAccounts);
+                res.status(200).json(dbAccounts);
+            }).catch(function (err){
+                res.status(400).send(err);
             });
 
-        })
+        });
 
     });
 
@@ -77,8 +87,10 @@ module.exports = function (app) {
         db.Transaction.findAll({
             include: [db.Transaction]
         }).then(function (allTransactions) {
-            res.json(allTransactions);
-        });
+            res.status(200).json(allTransactions);
+        }).catch(function (err){
+            res.status(404).send(err);
+        })
 });
 
 // Get route for one transactions
@@ -88,8 +100,8 @@ app.get("/api/transactions/:transactions_ID", function (req, res) {
             transaction_ID: req.params.transaction_ID
         }
     }).then(function (oneTransaction) {
-        res.json(oneTransaction);
-    });
+        res.status(200).json(oneTransaction);
+    }).catch(404).send(err);
 });
 
 
@@ -116,11 +128,14 @@ app.post("/api/transactions", function (req, res) {
                     balance: currentBalance,
                     transaction: transaction
                 }
-                res.json(obj);
-            });
+                res.status(202).json(obj);
+            }).catch(function(err){
+                res.status(406).send(err);
+            })
         });
     });
 
+});
 });
 }
 
