@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Transaction', {
+    return queryInterface.createTable('Transactions', {
       transaction_ID: {
         allowNull: false,
         primaryKey: true,
@@ -44,6 +44,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('User');
+    return queryInterface.dropTable('Transactions');
   }
 };
