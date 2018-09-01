@@ -1,8 +1,9 @@
+'use strict';
 module.exports = function(sequelize, DataTypes) {
 
   var User = sequelize.define("User", {
     // Giving the User model a uuid of type UUIDV4
-    uuid: {
+    user_ID: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true
@@ -39,28 +40,27 @@ module.exports = function(sequelize, DataTypes) {
     },
     // Users primPhone, type STRING
     primPhone: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       len: [14]
     },
     // Users ssn, type STRING
     ssn: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       len: [10]
     },
     // Users joinDate, type DATEONLY
     joinDate: {
-      type: DataTypes.DATEONLY
+      type: DataTypes.DATEONLY,
+      allowNull: false
     },
+    // Users email, type STRING
     email:{
         type:DataTypes.STRING,
         allowNull:false,
-        unique: true,
-        validate:{
-            isEmail: true
-        }
     },
+    // Users password, type STRING
     password:{
         type: DataTypes.STRING,
         allowNull:false
