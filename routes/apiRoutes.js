@@ -21,22 +21,29 @@ module.exports = function (app) {
     });
 
     // Put route to update user's row
-    app.put("/api/user/:User_ID", function (req, res) {
-        db.User.findOne({
+    app.put("/api/user/:uuid", function (req, res) {
+        db.User.update(req.body, {
             where: {
-                User_ID: req.params.User_ID
+                uuid: req.body.uuid
             }
-        }).then(function (usersId) {
-            var userId = usersId;
-
-            db.User.update(req.body, userId)
-            .then(function (dbUser) {
-                res.status(200).json(dbUser);
-            }).catch(function (err){
-                res.status(404).send(err);
-            });
+        }).then(function (dbUser) {
+            res.json(dbUser);
         });
-    })
+    });
+
+    // Delete route for deletings users
+    app.delete("/api/user/:uuid", function (req, res) {
+        db.User.destroy(req.params, {
+            where: {
+                uuid: req.params.uuid
+            }
+        }).then(function (dbUser) {
+            res.json(dbUser);
+            
+        });
+
+        // maybe set update delete route for deleting account simultaneously
+    });
 
 <<<<<<< HEAD
     // GET route for accounts 
@@ -54,9 +61,8 @@ module.exports = function (app) {
                 acctName: 'Checkings'
             }})
             .then(function (dbAccounts) {
-                res.status(200).json(dbAccounts);
-            }).catch(function (err){
-                res.status(401).send(err);
+                res.json(dbAccounts);
+            });
     });
 =======
 >>>>>>> parent of ba934c4... Added API Routes, Repaired GUI, Added Additional Queries, Repaired Database Models
@@ -70,91 +76,78 @@ module.exports = function (app) {
     });
 
     // GET route for single account
-    app.get("/api/accounts/:User_ID", function (req, res) {
-        db.Account.findOne({
+    app.get("/api/accounts/:User_UserID", function (req, res) {
+        db.Accounts.findOne({
             where: {
-                User_ID: req.params.User_ID
+                User_UserID: req.params.User_UserID
             }
         }).then(function (dbAccounts) {
-            res.status(200).json(dbAccounts);
-        }).catch(function(err){
-            res.status(401).send(err);
+            res.json(dbAccounts);
         });
     });
 
     // Put routes for updating account
     app.put("/api/accounts/:User_UserID", function (req, res) {
-        db.Account.findOne({
+        db.Accounts.update(req.body, {
             where: {
-                User_ID: req.params.User_ID
+                User_UserID: req.body.User_UserID
             }
-        }).then(function (thisAccount) {
-
-            db.Account.update(req.body, thisAccount
-            ).then(function (dbAccounts) {
-                res.status(200).json(dbAccounts);
-            }).catch(function (err){
-                res.status(400).send(err);
-            });
-
+        }).then(function (dbAccounts) {
+            res.json(dbAccounts);
         });
-
     });
 
-    // Get route for all transactions
-    app.get("/api/transactions", function (req, res) {
-        db.Transaction.findAll({
-            include: [db.Transaction]
-        }).then(function (allTransactions) {
-            res.status(200).json(allTransactions);
-        }).catch(function (err){
-            res.status(404).send(err);
-        })
-});
+    // Delete route for deleting accounts
+    app.delete("/api/accounts/:User_UserID", function (req, res) {
+        db.Accounts.update(req.params, {
+            where: {
+                User_UserID: req.params.User_UserID
+            }
+        }).then(function (dbAccounts) {
+            res.json(dbAccounts);
+        });
+    });
 
-// Get route for one transactions
-app.get("/api/transactions/:transactions_ID", function (req, res) {
-    db.transaction.findOne({
-        where: {
-            transaction_ID: req.params.transaction_ID
-        }
-    }).then(function (oneTransaction) {
-        res.status(200).json(oneTransaction);
-    }).catch(404).send(err);
-});
-
-
-// Post route for transactions
-app.post("/api/transactions", function (req, res) {
-
-    db.Account.findOne({
-        where: {
-            User_ID: req.params.User_ID
-        }
-    }).then(function (accounts) {
-        var account = accounts;
-
-        db.Transaction.create({
+    // Post route for transactions
+    app.post("/api/transactions", function (req, res) {
+        db.Transactions.create({
             Accounts_AccountID: req.body.Accounts_AccountID,
             amount: req.body.amount
         }).then(function (dbTransactions) {
-            var transaction = dbTransactions;
-            var acctBal = account.balance - dbTransactions.amount;
-
-            // update accounts balance here
-            db.Account.update(acctBal).then(function (currentBalance) {
-                var obj = {
-                    balance: currentBalance,
-                    transaction: transaction
-                }
-                res.status(202).json(obj);
-            }).catch(function(err){
-                res.status(406).send(err);
-            })
+            res.json(dbTransactions);
         });
+
+        // accountNum.balance = balance - amount;
+        // update accounts balance here
+        // app.put("/api/accounts", function (req, res){
+        //     db.Accounts.update(accountNum).then(function (newBalance){
+        //         res.json(newBalance);
+        //     });
+        // });
     });
 
-});
-});
-}
+    // Post route for transfers
+    app.post("/api/transfers", function (req, res) {
+        db.Transfers.create({
+            transferID: req.body.transferID,
+            senderID: req.body.senderID,
+            senderEmail: req.body.senderEmail,
+            amtSent: req.body.amtSent,
+            receiverID: req.body.receiverID,
+            receiverEmail: req.body.receiverEmail
+        }).then(function (dbTransfers) {
+            res.json(dbTransfers);
+        });
 
+        // accounts.balance = balance + amtSent;
+        // update account balance here
+        // app.put("/api/accounts", function (req, res){
+        //     db.Accounts.update(accountNum).then(function (newBalance){
+        //         res.json(newBalance);
+        //     });
+        // });
+    });
+
+
+
+}
