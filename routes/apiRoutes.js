@@ -2,7 +2,7 @@ var db = require("../models");
 
 module.exports = function (app) {
 
-    // Post route for Create User Account
+    // Post route for Users
     app.post("/api/user", function (req, res) {
         db.User.create({
             first_name: req.body.first_name,
@@ -12,32 +12,10 @@ module.exports = function (app) {
             state: req.body.state,
             primPhone: req.body.primPhone,
             ssn: req.body.ssn,
-            joinDate: new Date().toDateString(),
+            joinDate: req.body.joinDate,
             email: req.body.email,
             password: req.body.password
         }).then(function (dbUser) {
-
-            //Create Checkings Account
-            db.Accounts.create({
-                accountNum: Math.floor(Math.random() * 9999999),
-                balance: 250,
-                openBal: 0,
-                acctName: "Checkings",
-                openDate: new Date().toDateString(),
-                interestRate: 4,
-                UserUuid: dbUser.uuid
-            })
-            //Create Savings Account
-            db.Accounts.create({
-                accountNum: Math.floor(Math.random() * 9999999),
-                balance: 250,
-                openBal: 0,
-                acctName: "Savings",
-                openDate: new Date().toDateString(),
-                interestRate: 4,
-                UserUuid: dbUser.uuid
-            })
-
             res.json(dbUser);
         });
     });
@@ -60,6 +38,7 @@ module.exports = function (app) {
         });
     })
 
+<<<<<<< HEAD
     // GET route for accounts 
     // app.get("/api/accounts", function (req, res) {
     //     db.Accounts.findAll({ include: [db.Accounts] })
@@ -79,18 +58,16 @@ module.exports = function (app) {
             }).catch(function (err){
                 res.status(401).send(err);
     });
+=======
+>>>>>>> parent of ba934c4... Added API Routes, Repaired GUI, Added Additional Queries, Repaired Database Models
 
-    // GET route for Savings Acccounts with User Data
-    app.get("/api/getSavings", function (req, res) {
-        db.Accounts.findAll({ include: [{model: db.User,required: true}], 
-            where: {
-                acctName: 'Savings'
-            }})
+    // GET route for accounts 
+    app.get("/api/accounts", function (req, res) {
+        db.Accounts.findAll({ include: [db.Accounts] })
             .then(function (dbAccounts) {
                 res.json(dbAccounts);
             });
     });
-
 
     // GET route for single account
     app.get("/api/accounts/:User_ID", function (req, res) {
