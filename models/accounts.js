@@ -23,7 +23,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     User_UserID: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUID3,
+      defaultValue: DataTypes.UUIDV1,
       len: [1,50]
     },
     openDate: {
