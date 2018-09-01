@@ -4,7 +4,7 @@ module.exports = function(sequelize, DataTypes) {
     // Giving the User model a uuid of type UUIDV4
     uuid: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV3,
+      defaultValue: DataTypes.UUIDV1,
       primaryKey: true
     },
     // Users first_name, type STRING
@@ -67,13 +67,13 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  User.prototype.validPassword = function(password){
-      return bcrypt.compareSync(password,this.password);
-  }
+  // User.prototype.validPassword = function(password){
+  //     return bcrypt.compareSync(password,this.password);
+  // }
 
-  User.hook("beforeCreate", function(user){
-      user.password= bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
-  })
+  // User.hook("beforeCreate", function(user){
+  //     user.password= bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+  // })
 
   return User;
 };
