@@ -67,21 +67,13 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  User.prototype.validPassword = function(password){
-      return bcrypt.compareSync(password,this.password);
-  }
+  // User.prototype.validPassword = function(password){
+  //     return bcrypt.compareSync(password,this.password);
+  // }
 
-  User.hook("beforeCreate", function(user){
-      user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
-  });
-
-  // Associates User and Account table because the user hasMany accounts
-  User.associate = function(models) {
-    User.hasMany(models.Account, {
-      foreignKey: "User_UserID",
-      constraints: false
-    });
-  }
+  // User.hook("beforeCreate", function(user){
+  //     user.password= bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+  // })
 
   return User;
 };
