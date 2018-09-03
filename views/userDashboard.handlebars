@@ -8,13 +8,13 @@
 
            <div class="col-md-6">
                         <h4 >Identification</h4>
-                        <input type="text"  name="account-number-source" placeholder="" required class="form-control input-lg" value="Cristian" />
-                        <input type="text"  name="transfer-amount-source" placeholder="" required class="form-control input-lg" value="Custodio" />
+                        <input type="text"  name="account-number-source" placeholder="" required class="form-control input-lg" value={{User.first_name}} />
+                        <input type="text"  name="transfer-amount-source" placeholder="" required class="form-control input-lg" value={{User.last_name}} />
                       </div>
                       <div class="col-md-6">
-                    <h4 >Account Status</h4>
-                       <input type="text"  name="account-number-destination" placeholder="" required class="form-control input-lg" value="Active" />
-                       <input type="text"  name="transfer-note" placeholder="" required class="form-control input-lg" value="1548458" />
+                    <h4 >User Details</h4>
+                       <input type="text"  name="account-number-destination" placeholder="" required class="form-control input-lg" value={{User.joinDate}} />
+                       <input type="text" id="email" name="transfer-note" placeholder="" required class="form-control input-lg" value={{User.email}} />
                       </div>
                       
                 <h5 style="color:#f2f2f2"> Placeholder </h5>
@@ -26,7 +26,7 @@
                 </ul>
                 <div class="tab-content">
                   <div id="checkings" class="tab-pane fade in active">
-                    <h3 style="color:green">Account Balance: $450.56</h3>
+                    <h3 id="checkingBalance" style="color:green">Account Balance: $450.56</h3>
                     <!-- Checkings User List-->
                                 <div class="panel panel-success">
                                   <div class="panel-heading">
@@ -36,7 +36,7 @@
                                     <table class="table table-hover" id='user-table-transactions-checkings'>
                                       <thead style="text-align:center">
                                         <tr>
-                                          <th>ID</th>
+                                          <th>id</th>
                                           <th>Date</th>
                                           <th>Transaction Type</th>
                                           <th>Amount</th>
@@ -49,7 +49,7 @@
                               </div>
                   </div>
                   <div id="savings" class="tab-pane fade">
-                    <h3 style="color:green">Account Balance: $2138.56</h3>
+                    <h3 id="savingBalance"style="color:green">$0.00</h3>
                     <!-- Savings User List-->
                                 <div class="panel panel-success">
                                   <div class="panel-heading">

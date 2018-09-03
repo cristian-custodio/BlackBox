@@ -21,8 +21,27 @@ module.exports = function(app) {
 
   //Load User Dashboard Page
 app.get("/user/:id", function(req, res) {
-  res.render("userDashboard");
+  db.User.findOne({ where: {email: req.params.id} }).then(function(result) {
+    console.log(result);
+    //res.json(result);
+    res.render("userDashboard", {
+      User: result
+  });
 });
+});  
+
+//   db.User.findOne
+//     where: {
+//         email: req.params.id
+//            }
+//         }).then(function (dbAccounts) {
+//             res.json(dbAccounts);
+//             console.log(dbAccounts);
+//         });
+
+//         
+  
+// });
 
 
   // Render 404 page for any unmatched routes
