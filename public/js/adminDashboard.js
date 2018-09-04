@@ -1,18 +1,19 @@
 $(document).ready(function(){
-   
-
-       alert("Users will be loaded");
-
-        var i;
-        for (i = 0; i < 10; i++) {
-            $("#user-table-checkings > tbody").append("<tr><td>" + i + "</td><td>" + "Cristian" + "</td><td>" + "Custodio" + 
-            "</td><td>" + "486518765" + "</td><td>" + "580.65" + "</td></tr>");
-
-            $("#user-table-savings > tbody").append("<tr><td>" + i + "</td><td>" + "Cristian" + "</td><td>" + "Custodio" + 
-            "</td><td>" + "486518765" + "</td><td>" + "580.65" + "</td></tr>");
-
-        }
-
-       
+        //Populate Checkings Table
+        $.ajax({url: "api/getCheckings", success: function(result){
+            result.forEach(function (arrayItem) {
+                $("#user-table-checkings > tbody").append("<tr><td>" + arrayItem.id + "</td><td>" + arrayItem.User.first_name + "</td><td>" + arrayItem.User.last_name + 
+            "</td><td>" + arrayItem.accountNum + "</td><td>" + "$" + arrayItem.balance+ "</td></tr>");
+            });
+        }});
+        
+        //Populate Savings Table
+        $.ajax({url: "api/getSavings", success: function(result){
+            console.log(result);
+            result.forEach(function (arrayItem) {
+                $("#user-table-savings > tbody").append("<tr><td>" + arrayItem.id + "</td><td>" + arrayItem.User.first_name + "</td><td>" + arrayItem.User.last_name + 
+            "</td><td>" + arrayItem.accountNum + "</td><td>" + "$" + arrayItem.balance+ "</td></tr>");
+            });
+        }});
 });
 

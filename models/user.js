@@ -1,9 +1,10 @@
-'use strict';
+var bcrypt = require("bcrypt");
+
 module.exports = function(sequelize, DataTypes) {
 
   var User = sequelize.define("User", {
     // Giving the User model a uuid of type UUIDV4
-    user_ID: {
+    uuid: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true
@@ -40,27 +41,28 @@ module.exports = function(sequelize, DataTypes) {
     },
     // Users primPhone, type STRING
     primPhone: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       len: [14]
     },
     // Users ssn, type STRING
     ssn: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       len: [10]
     },
     // Users joinDate, type DATEONLY
     joinDate: {
-      type: DataTypes.DATEONLY,
-      allowNull: false
+      type: DataTypes.DATEONLY
     },
-    // Users email, type STRING
     email:{
         type:DataTypes.STRING,
         allowNull:false,
+        unique: true,
+        validate:{
+            isEmail: true
+        }
     },
-    // Users password, type STRING
     password:{
         type: DataTypes.STRING,
         allowNull:false
@@ -72,16 +74,11 @@ module.exports = function(sequelize, DataTypes) {
   }
 
   User.hook("beforeCreate", function(user){
-      user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
-  });
+      user.password= bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+  })
 
-  // Associates User and Account table because the user hasMany accounts
-  User.associate = function(models) {
-    User.hasMany(models.Account, {
-      foreignKey: "User_UserID",
-      constraints: false
-    });
-  }
+
+
 
   return User;
 };

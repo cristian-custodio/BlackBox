@@ -1,8 +1,24 @@
 var db = require("../models");
+var passport = require("../helpers/passport.js");
 
 module.exports = function (app) {
 
-    // Post route for Users
+    //Authentication Routes
+    app.post("/api/login", passport.authenticate("local"), (req, res) => {
+         if(req.user.email === "admin@blackboxbank.com") {
+            res.json('/admin');
+
+        } else {
+            res.json('/user/' + req.user.email);
+        }
+    });
+
+    app.get("/logout", (req, res) => {
+        req.logout();
+        res.redirect("/");
+    });
+
+    // Post route for Create User Account
     app.post("/api/user", function (req, res) {
         db.User.create({
             first_name: req.body.first_name,
@@ -12,10 +28,32 @@ module.exports = function (app) {
             state: req.body.state,
             primPhone: req.body.primPhone,
             ssn: req.body.ssn,
-            joinDate: req.body.joinDate,
+            joinDate: new Date().toDateString(),
             email: req.body.email,
             password: req.body.password
         }).then(function (dbUser) {
+
+            //Create Checkings Account
+            db.Accounts.create({
+                accountNum: Math.floor(Math.random() * 9999999),
+                balance: 250,
+                openBal: 0,
+                acctName: "Checkings",
+                openDate: new Date().toDateString(),
+                interestRate: 4,
+                UserUuid: dbUser.uuid
+            })
+            //Create Savings Account
+            db.Accounts.create({
+                accountNum: Math.floor(Math.random() * 9999999),
+                balance: 250,
+                openBal: 0,
+                acctName: "Savings",
+                openDate: new Date().toDateString(),
+                interestRate: 4,
+                UserUuid: dbUser.uuid
+            })
+
             res.json(dbUser);
         });
     });
@@ -31,24 +69,25 @@ module.exports = function (app) {
         });
     });
 
-    // Delete route for deletings users
-    app.delete("/api/user/:uuid", function (req, res) {
-        db.User.destroy(req.params, {
-            where: {
-                uuid: req.params.uuid
-            }
-        }).then(function (dbUser) {
-            res.json(dbUser);
-            
-        });
 
-        // maybe set update delete route for deleting account simultaneously
+
+    // GET Route (Get all Checking Accounts & User Data)
+    app.get("/api/getCheckings", function (req, res) {
+        db.Accounts.findAll({ include: [{model: db.User,required: true}], 
+            where: {
+                acctName: 'Checkings'
+            }})
+            .then(function (dbAccounts) {
+                res.json(dbAccounts);
+            });
     });
 
-
-    // GET route for accounts 
-    app.get("/api/accounts", function (req, res) {
-        db.Accounts.findAll({ include: [db.Accounts] })
+    // GET Route (Get all Saving Accounts & User Data)
+    app.get("/api/getSavings", function (req, res) {
+        db.Accounts.findAll({ include: [{model: db.User,required: true}], 
+            where: {
+                acctName: 'Savings'
+            }})
             .then(function (dbAccounts) {
                 res.json(dbAccounts);
             });
@@ -56,7 +95,7 @@ module.exports = function (app) {
 
     // GET route for single account
     app.get("/api/accounts/:User_UserID", function (req, res) {
-        db.Accounts.findOne({
+        db.Accounts.findOne({ 
             where: {
                 User_UserID: req.params.User_UserID
             }
@@ -87,22 +126,28 @@ module.exports = function (app) {
         });
     });
 
+
+    //Get Route for getting transactions by user/account
+    app.post("/api/getTransactions", function (req, res) {
+        db.Transactions.findAll({ include: [{model: db.Accounts,required: true}], 
+            })
+            .then(function (transactions) {
+                res.json(transactions);
+            });
+    });
+
+
     // Post route for transactions
     app.post("/api/transactions", function (req, res) {
         db.Transactions.create({
             Accounts_AccountID: req.body.Accounts_AccountID,
+            AccountId: req.body.AccountId,
             amount: req.body.amount
         }).then(function (dbTransactions) {
             res.json(dbTransactions);
         });
 
-        // accountNum.balance = balance - amount;
-        // update accounts balance here
-        // app.put("/api/accounts", function (req, res){
-        //     db.Accounts.update(accountNum).then(function (newBalance){
-        //         res.json(newBalance);
-        //     });
-        // });
+    
     });
 
     // Post route for transfers
@@ -128,5 +173,11 @@ module.exports = function (app) {
     });
 
 
+    app.get("/user/userlookup/:id", function(req, res) {
+        db.User.findOne({ where: {email: req.params.id} }).then(function(result) {
+          res.json(result);
+      });
+      });  
 
 }
+

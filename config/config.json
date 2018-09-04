@@ -1,26 +1,22 @@
 {
   "development": {
     "username": "root",
-    "password": "Thor_2012",
-    "database": "bank_db",
-    "host": "localhost",
-    "dialect": "mysql",
-    "logging": true,
-    "operatorsAliases": "Sequelize.Op"
-  },
-  "test": {
-    "username": "root",
-    "password": "",
+    "password": "12345678",
     "database": "bank_db",
     "host": "localhost",
     "dialect": "mysql"
   },
-  "production": {
+  "test": {
     "username": "root",
-    "password": "",
-    "database": "bank_db",
+    "password": null,
+    "database": "testdb",
     "host": "localhost",
     "dialect": "mysql",
-    "operatorsAliases": "Sequelize.Op"
+    "logging": false
+  },
+  "production": {
+    "use_env_variable": "JAWSDB_URL",
+    "dialect": "mysql"
   }
 }
+ 
