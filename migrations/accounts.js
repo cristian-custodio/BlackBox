@@ -14,7 +14,7 @@ module.exports = {
       },
       accountNum: {
         allowNull:false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       currentBal: {
         allowNull: false,
@@ -34,7 +34,7 @@ module.exports = {
       },
       intRate: {
         allowNull: false,
-        type: Sequelize.DECIMAL
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
