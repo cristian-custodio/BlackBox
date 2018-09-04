@@ -31,7 +31,7 @@ module.exports = {
       },
       receiverEmail: {
         allowNull: false,
-        type: Sequelize.DATEONLY
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

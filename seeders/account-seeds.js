@@ -7,9 +7,9 @@ module.exports = {
         accountNum: 654234975,
         currentBal: 2578.89,
         openBal: 1378.63,
-        acctType: 'checking',
+        acctType: 'savings',
         openDate: new Date(2018,06,17),
-        intRate: 0.01,
+        intRate: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       }], {});
