@@ -19,7 +19,7 @@ module.exports = function (app) {
     });
 
     // Post route for Create User Account
-    app.post("/createAccount/api/user", function (req, res) {
+    app.post("/api/user", function (req, res) {
         db.User.create({
             first_name: req.body.first_name,
             last_name: req.body.last_name,
