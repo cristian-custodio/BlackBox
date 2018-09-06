@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
   var Accounts = sequelize.define("Accounts", {
     // Giving the Accounts model an accountNum of type INT
     accountNum: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       len: [9,10]
     },
     balance: {
@@ -32,7 +32,7 @@ module.exports = function(sequelize, DataTypes) {
       len: [2]
     },
     interestRate: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
       len: [14]
     }

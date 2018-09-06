@@ -73,7 +73,7 @@ module.exports = function (app) {
 
     // GET Route (Get all Checking Accounts & User Data)
     app.get("/api/getCheckings", function (req, res) {
-        db.Accounts.findAll({ include: [{model: db.User,required: true}],
+        db.Accounts.findAll({ include: [{model: db.User,required: true}], 
             where: {
                 acctName: 'Checkings'
             }})
@@ -84,7 +84,7 @@ module.exports = function (app) {
 
     // GET Route (Get all Saving Accounts & User Data)
     app.get("/api/getSavings", function (req, res) {
-        db.Accounts.findAll({ include: [{model: db.User,required: true}],
+        db.Accounts.findAll({ include: [{model: db.User,required: true}], 
             where: {
                 acctName: 'Savings'
             }})
@@ -95,7 +95,7 @@ module.exports = function (app) {
 
     // GET route for single account
     app.get("/api/accounts/:User_UserID", function (req, res) {
-        db.Accounts.findOne({
+        db.Accounts.findOne({ 
             where: {
                 User_UserID: req.params.User_UserID
             }
@@ -129,7 +129,7 @@ module.exports = function (app) {
 
     //Get Route for getting transactions by user/account
     app.post("/api/getTransactions", function (req, res) {
-        db.Transactions.findAll({ include: [{model: db.Accounts,required: true}],
+        db.Transactions.findAll({ include: [{model: db.Accounts,required: true}], 
             })
             .then(function (transactions) {
                 res.json(transactions);
@@ -147,7 +147,7 @@ module.exports = function (app) {
             res.json(dbTransactions);
         });
 
-
+    
     });
 
     // Post route for transfers
@@ -177,6 +177,7 @@ module.exports = function (app) {
         db.User.findOne({ where: {email: req.params.id} }).then(function(result) {
           res.json(result);
       });
-      });
+      });  
 
 }
+

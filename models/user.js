@@ -4,13 +4,10 @@ module.exports = function(sequelize, DataTypes) {
 
   var User = sequelize.define("User", {
     // Giving the User model a uuid of type UUIDV4
-    user_ID: {
+    uuid: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
-      validate: {
-        notNull: true
-      }
+      defaultValue: DataTypes.UUIDV1,
+      primaryKey: true
     },
     // Users first_name, type STRING
     first_name: {
