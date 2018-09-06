@@ -1,7 +1,7 @@
 {
   "name": "blackbox",
   "version": "1.0.0",
-  "description": "BlackBox Bank",
+  "description": "Project 2 Starter",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -18,12 +18,14 @@
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
-    "mysql": "^2.16.0",
+    "hbs": "^4.0.1",
+    "method-override": "^3.0.0",
     "mysql2": "^1.5.3",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "sequelize": "^4.38.0",
     "sequelize-cli": "^4.1.1",
+    "sequelize-heroku": "^2.0.0",
     "session": "^0.1.0"
   },
   "devDependencies": {
