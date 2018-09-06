@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $('#submit').click(function(){
-        alert("The paragraph was clicked.");
+        alert("User Was Created");
         handleFormSubmit();
     });
 
@@ -47,7 +47,7 @@ var API = {
           "Content-Type": "application/json"
         },
         type: "POST",
-        url: "api/user",
+        url: "/api/user",
         data: JSON.stringify(newUser)
       });
     }
